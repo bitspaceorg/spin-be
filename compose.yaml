@@ -1,0 +1,56 @@
+version: "3"
+services:
+  backend:
+    container_name: spin
+    build: .
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      SALT_ROUNDS: ${SALT_ROUNDS}
+      JWT_KEY: ${JWT_KEY}
+      CERBROS_URL: ${CERBROS_URL}
+    depends_on:
+      - db
+    networks:
+      - db
+    ports:
+      - "3000:3000"
+  migration:
+    image: migrate/migrate
+    networks:
+      - db
+    volumes:
+      - ./migrations:/migrations
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+    command:
+      [
+        "-path",
+        "/migrations",
+        "-database",
+        "postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DBNAME?sslmode=disable",
+        "up"
+      ]
+    links:
+      - db
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+      POSTGRES_DB: spin
+    volumes:
+      - db:/data/postgres
+    networks:
+      - db
+networks:
+  db:
+    driver: bridge
+volumes:
+  db:

@@ -15,3 +15,8 @@ app.get("/health", useAuth, (req, res) => {
 app.listen(3000, () => {
 	console.log("Running on port 3000..");
 });
+
+process.on("SIGTERM",()=>{
+	console.log("[INFO] Stopping the server running on port 3000...")
+	//cleanup logic here
+})

@@ -18,7 +18,7 @@ const Env = {
 	POSTGRES_DBNAME: process.env.POSTGRES_DBNAME,
 	SALT_ROUNDS: parseInt(process.env.SALT_ROUNDS),
 	JWT_KEY:process.env.JWT_KEY,
-	CERBROS_URL:process.env.CERBOS_URL
+	CERBROS_URL:process.env.CERBROS_URL
 }
 
 envSchema.parse(Env);
