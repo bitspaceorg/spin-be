@@ -1,0 +1,37 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  resource: patient
+  version: default
+  rules:
+    - actions:
+        - create
+      effect: EFFECT_ALLOW
+      roles:
+        - user
+        - admin
+        - physician
+        - dean
+    - actions:
+        - read
+      effect: EFFECT_ALLOW
+      roles:
+        - user
+        - admin
+        - physician
+        - nurse
+        - dean
+        - administrator
+    - actions:
+        - update
+      effect: EFFECT_ALLOW
+      roles:
+        - user
+        - admin
+        - physician
+        - dean
+    - actions:
+        - delete
+      effect: EFFECT_ALLOW
+      roles:
+        - admin
+        - dean

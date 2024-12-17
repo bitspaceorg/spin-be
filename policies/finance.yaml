@@ -1,0 +1,29 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  resource: finance
+  version: default
+  rules:
+    - actions:
+        - create
+      effect: EFFECT_ALLOW
+      roles:
+        - dean
+        - finance_manager
+    - actions:
+        - read
+      effect: EFFECT_ALLOW
+      roles:
+        - dean
+        - administrator
+        - finance_manager
+    - actions:
+        - update
+      effect: EFFECT_ALLOW
+      roles:
+        - dean
+        - finance_manager
+    - actions:
+        - delete
+      effect: EFFECT_ALLOW
+      roles:
+        - dean
