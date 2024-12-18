@@ -26,7 +26,7 @@ export async function handleLogin(req, res) {
 			message: "Login Successful!",
 		});
 	} catch (err) {
-		console.error("ERROR: ", err);
+		console.error("ERROR: ", err.message);
 		res.json({
 			message: "Login Failed!",
 		});
@@ -49,7 +49,7 @@ export async function handleSignup(req, res) {
 			user_id: id,
 		});
 	} catch (err) {
-		console.error("ERROR: ", err);
+		console.error("ERROR: ", err.message);
 		res.json({
 			message: "Failed to Create User!",
 		});

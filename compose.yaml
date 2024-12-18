@@ -13,6 +13,7 @@ services:
       CERBROS_URL: ${CERBROS_URL}
     depends_on:
       - db
+      - cerbos
     networks:
       - db
     ports:
@@ -47,6 +48,16 @@ services:
       POSTGRES_DB: spin
     volumes:
       - db:/data/postgres
+    networks:
+      - db
+  cerbos:
+    container_name: cerbros
+    image: ghcr.io/cerbos/cerbos:0.40.0
+    ports:
+      - "3592:3592"
+    volumes:
+      - ./policies:/policies
+    command: compile /policies
     networks:
       - db
 networks:
