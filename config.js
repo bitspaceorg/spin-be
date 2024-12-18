@@ -8,7 +8,8 @@ const envSchema = z.object({
 	POSTGRES_DBNAME: z.string().min(3),
 	SALT_ROUNDS: z.number(),
 	JWT_KEY:z.string(),
-	CERBROS_URL:z.string()
+	CERBROS_URL:z.string(),
+	PORT:z.string().max(4).min(4)
 });
 
 const Env = {
@@ -18,7 +19,8 @@ const Env = {
 	POSTGRES_DBNAME: process.env.POSTGRES_DBNAME,
 	SALT_ROUNDS: parseInt(process.env.SALT_ROUNDS),
 	JWT_KEY:process.env.JWT_KEY,
-	CERBROS_URL:process.env.CERBROS_URL
+	CERBROS_URL:process.env.CERBROS_URL,
+	PORT:process.env.PORT
 }
 
 envSchema.parse(Env);

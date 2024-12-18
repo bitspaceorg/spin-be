@@ -8,6 +8,12 @@ export async function handleLogin(req, res) {
 	try {
 		const data = await loginSchema.parseAsync(user);
 		const dbUser = await db.getUser(data.email);
+		if(!dbUser[0]){
+			res.json({
+				message: "Invalid User Credentials!",
+			});
+			return;
+		}
 		if (!checkHash(data.password, dbUser[0].password)) {
 			res.send("Failed to login user!");
 			return;
@@ -49,9 +55,15 @@ export async function handleSignup(req, res) {
 			user_id: id,
 		});
 	} catch (err) {
-		console.error("ERROR: ", err.message);
-		res.json({
-			message: "Failed to Create User!",
-		});
+		console.error("ERROR: ", err.message,err.code);
+		if(err.code=="23505"){
+			res.json({
+				message: "User Already Exists!",
+			});
+		}else{
+			res.json({
+				message: "Failed to Create User!",
+			});
+		}
 	}
 }
