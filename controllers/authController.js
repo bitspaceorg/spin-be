@@ -8,7 +8,7 @@ export async function handleLogin(req, res) {
 	try {
 		const data = await loginSchema.parseAsync(user);
 		const dbUser = await db.getUser(data.email);
-		if(!dbUser[0]){
+		if (!dbUser[0]) {
 			res.json({
 				message: "Invalid User Credentials!",
 			});
@@ -30,6 +30,10 @@ export async function handleLogin(req, res) {
 		});
 		res.json({
 			message: "Login Successful!",
+			data: {
+				id: dbUser[0].id,
+				role: dbUser[0].role,
+			},
 		});
 	} catch (err) {
 		console.error("ERROR: ", err.message);
@@ -55,12 +59,12 @@ export async function handleSignup(req, res) {
 			user_id: id,
 		});
 	} catch (err) {
-		console.error("ERROR: ", err.message,err.code);
-		if(err.code=="23505"){
+		console.error("ERROR: ", err.message, err.code);
+		if (err.code == "23505") {
 			res.json({
 				message: "User Already Exists!",
 			});
-		}else{
+		} else {
 			res.json({
 				message: "Failed to Create User!",
 			});
