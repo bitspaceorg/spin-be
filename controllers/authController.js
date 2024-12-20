@@ -25,8 +25,9 @@ export async function handleLogin(req, res) {
 
 		res.cookie("token", token, {
 			maxAge: 1000 * 3600, //1 hours
-			secure: true,
-			httpOnly: true,
+			secure: false,
+			httpOnly: false,
+            sameSite: "lax",
 		});
 		res.json({
 			message: "Login Successful!",

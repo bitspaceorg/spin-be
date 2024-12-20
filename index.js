@@ -6,8 +6,20 @@ import { router as authRouter } from "./routes/authRoutes.js";
 import { router as uploadRouer } from "./routes/uploadRoutes.js";
 import { useAuth } from "./middlewares/authMiddleare.js";
 import { upload } from "./middlewares/uploadMiddleware.js";
+import cors from 'cors';
+
+const allowedOrigins = ["http://localhost:6969"]
+
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 202,
+};
 
 const app = express();
+
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use("/auth", authRouter);
