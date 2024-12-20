@@ -17,6 +17,7 @@ services:
       AZURE_PASSWORD: ${AZURE_PASSWORD}
       AZURE_ONELAKEURL: ${AZURE_ONELAKEURL}
       PORT: ${PORT}
+      BACKEND_URL: ${BACKEND_URL}
     depends_on:
       - db
       - cerbos
