@@ -1,0 +1,13 @@
+{
+  "date": "2024-12-19",
+  "name": "John Doe",
+  "age": "34",
+  "gender": "Male",
+  "blood_pressure": "120/80",
+  "heart_rate": "72",
+  "respiratory_rate": "16",
+  "temperature": "98.6",
+  "oxygen_saturation": "98%",
+  "physician_information": "Dr. Emily Carter",
+  "description": "Routine health check-up"
+}
