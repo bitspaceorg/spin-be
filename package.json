@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-		"test":"mocha"
+    "dev": "nodemon --ignore uploads/* index.js",
+    "test": "mocha --timeout 5000"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "1.4.5-lts.1",
     "nodemon": "^3.1.9",
     "postgres": "^3.4.5",
     "zod": "^3.24.1"

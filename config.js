@@ -37,5 +37,5 @@ const Env = {
 };
 
 envSchema.parse(Env);
-
+console.log(Env);
 export default Env;

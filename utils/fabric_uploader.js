@@ -1,16 +1,20 @@
+import "dotenv/config";
 import { ConfidentialClientApplication } from "@azure/msal-node";
 import axios from "axios";
 import path from "path";
-import fs from "fs"
+import fs from "fs";
+import Env from "../config.js";
 
 export default class FabricUploader {
+	static instance = null;
+
 	/**
 	 * @param {string} clientId
-	 * @param {string} clientSecret 
+	 * @param {string} clientSecret
 	 * @param {string} tenantId
 	 * @param {string} username
 	 * @param {string} password
-	 * @param {string} onelakeUrl 
+	 * @param {string} onelakeUrl
 	 * */
 	constructor(
 		clientId,
@@ -35,7 +39,6 @@ export default class FabricUploader {
 				clientSecret: this.clientSecret,
 			},
 		});
-
 	}
 
 	async getToken() {
@@ -51,6 +54,25 @@ export default class FabricUploader {
 			throw error;
 		}
 	}
+	/**
+	 * @returns {FabricUploader} a instance of the uploader class */
+	static getInstance() {
+		if (FabricUploader.instance) {
+			return FabricUploader.instance;
+		}
+
+		FabricUploader.instance = new FabricUploader(
+			Env.AZURE_CLIENTID,
+			Env.AZURE_CLIENTSECRET,
+			Env.AZURE_TENANTID,
+			Env.AZURE_USERNAME,
+			Env.AZURE_PASSWORD,
+			Env.AZURE_ONELAKEURL,
+		);
+
+		return FabricUploader.instance;
+	}
+
 	/**
 	 * @param {string} filePath - path of the file to be uploaded
 	 * */

@@ -1,4 +1,3 @@
-version: "3"
 services:
   backend:
     container_name: spin
@@ -11,12 +10,13 @@ services:
       SALT_ROUNDS: ${SALT_ROUNDS}
       JWT_KEY: ${JWT_KEY}
       CERBROS_URL: ${CERBROS_URL}
-      AZURE_CLIENTID: ${AZURE_CLIENTID},
-      AZURE_CLIENTSECRET: ${AZURE_CLIENTSECRET},
-      AZURE_TENANTID: ${AZURE_TENANTID},
-      AZURE_USERNAME: ${AZURE_USERNAME},
-      AZURE_PASSWORD: ${AZURE_PASSWORD},
-      AZURE_ONELAKEURL: ${AZURE_ONELAKEURL},
+      AZURE_CLIENTID: ${AZURE_CLIENTID}
+      AZURE_CLIENTSECRET: ${AZURE_CLIENTSECRET}
+      AZURE_TENANTID: ${AZURE_TENANTID}
+      AZURE_USERNAME: ${AZURE_USERNAME}
+      AZURE_PASSWORD: ${AZURE_PASSWORD}
+      AZURE_ONELAKEURL: ${AZURE_ONELAKEURL}
+      PORT: ${PORT}
     depends_on:
       - db
       - cerbos
@@ -40,7 +40,7 @@ services:
         "/migrations",
         "-database",
         "postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:5432/$POSTGRES_DBNAME?sslmode=disable",
-        "up"
+        "up",
       ]
     links:
       - db

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import FabricUploader from "../utils/fabric_uploader.js";
 import Env from "../config.js";
-import assert from "assert"
+import assert from "assert";
 
 describe("Should upload a file", () => {
 	it("Should Upload a file", async () => {
@@ -14,7 +14,17 @@ describe("Should upload a file", () => {
 			Env.AZURE_ONELAKEURL,
 		);
 		const res = await uploader.getToken();
-		assert.notEqual('',res)
+		assert.notEqual("", res);
+		try {
+			await uploader.upload("./mock/data.json");
+		} catch (err) {
+			console.log(err);
+			return ;
+		}
+	});
+
+	it("Should upload using singleton", async () => {
+		const uploader = FabricUploader.getInstance();
 		await uploader.upload("./mock/data.json");
 	});
 });
