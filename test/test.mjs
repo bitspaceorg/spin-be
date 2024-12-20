@@ -19,17 +19,22 @@ describe("Should upload a file", () => {
 			await uploader.upload("./mock/data.json");
 		} catch (err) {
 			console.log(err);
-			return ;
+			return;
 		}
 	});
 
 	it("Should upload using singleton", async () => {
 		const uploader = FabricUploader.getInstance();
-		await uploader.upload("./mock/data.json","bills");
+		await uploader.upload("./mock/data.json", "bills");
 	});
 
 	it("Should upload to health", async () => {
 		const uploader = FabricUploader.getInstance();
-		await uploader.upload("./mock/data.json","health");
+		await uploader.upload("./mock/data.json", "health");
+	});
+
+	it("Should upload to vectorDb", async () => {
+		const uploader = FabricUploader.getInstance();
+		await uploader.upload("./mock/data.json", "health", true);
 	});
 });

@@ -19,13 +19,15 @@ export const handleUpload = async (req, res) => {
 
 		const uploader = FabricUploader.getInstance();
 
-		await uploader.upload(req.file.path,req.body.type);
+		await uploader.upload(req.file.path,req.body.type,true);
+
 
 		fs.unlinkSync(req.file.path);
 
 		res.json({
 			message: "Upload Success!",
 		});
+
 	} catch (error) {
 		console.error("Upload error:", error);
 		if (req.file && fs.existsSync(req.file.path)) {

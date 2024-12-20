@@ -76,8 +76,9 @@ export default class FabricUploader {
 	/**
 	 * @param {string} filePath - path of the file to be uploaded
 	 * @param {string} folderName - name of the folder to be uploaded
+	 * @param {boolean} vectorUpload - set to true to upload to vectorDb
 	 * */
-	async upload(filePath,folderName) {
+	async upload(filePath, folderName, vectorUpload = false) {
 		try {
 			const fileName = path.basename(filePath);
 			const fileContent = fs.readFileSync(filePath);
@@ -122,9 +123,24 @@ export default class FabricUploader {
 					"Content-Length": 0,
 				},
 			});
+
+			if (vectorUpload) {
+				//vectroDB upload
+				const jsonData = JSON.parse(fileContent);
+				const concatenatedString = Object.entries(jsonData)
+					.map(([key, value]) => `${key}: ${value}`)
+					.join("\n");
+				await axios({
+					method: "post",
+					url: Env.BACKEND_URL+"/ingest",
+					data: {
+						content: concatenatedString,
+						doctype: folderName != "health" ? "finance" : "health",
+					},
+				});
+			}
 		} catch (err) {
 			console.log(err);
-			throw err;
 		}
 	}
 }

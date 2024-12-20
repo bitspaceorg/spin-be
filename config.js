@@ -17,6 +17,8 @@ const envSchema = z.object({
 	AZURE_USERNAME: z.string(),
 	AZURE_PASSWORD: z.string(),
 	AZURE_ONELAKEURL: z.string(),
+
+	BACKEND_URL:z.string(),
 });
 
 const Env = {
@@ -34,6 +36,8 @@ const Env = {
 	AZURE_USERNAME:process.env.AZURE_USERNAME,
 	AZURE_PASSWORD:process.env.AZURE_PASSWORD,
 	AZURE_ONELAKEURL:process.env.AZURE_ONELAKEURL,
+
+	BACKEND_URL:process.env.BACKEND_URL
 };
 
 envSchema.parse(Env);
