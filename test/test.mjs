@@ -25,6 +25,11 @@ describe("Should upload a file", () => {
 
 	it("Should upload using singleton", async () => {
 		const uploader = FabricUploader.getInstance();
-		await uploader.upload("./mock/data.json");
+		await uploader.upload("./mock/data.json","bills");
+	});
+
+	it("Should upload to health", async () => {
+		const uploader = FabricUploader.getInstance();
+		await uploader.upload("./mock/data.json","health");
 	});
 });

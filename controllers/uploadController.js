@@ -8,6 +8,10 @@ export const handleUpload = async (req, res) => {
 			return res.status(400).json({ error: "No file uploaded" });
 		}
 
+		if(!req.body.type){
+			return res.status(400).json({ error: "Upload type not found" });
+		}
+
 		if (path.extname(req.file.originalname).toLowerCase() !== ".json") {
 			fs.unlinkSync(req.file.path);
 			return res.status(400).json({ error: "Only JSON files are allowed" });
@@ -15,7 +19,7 @@ export const handleUpload = async (req, res) => {
 
 		const uploader = FabricUploader.getInstance();
 
-		await uploader.upload(req.file.path);
+		await uploader.upload(req.file.path,req.body.type);
 
 		fs.unlinkSync(req.file.path);
 

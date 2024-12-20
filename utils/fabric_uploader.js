@@ -75,14 +75,15 @@ export default class FabricUploader {
 
 	/**
 	 * @param {string} filePath - path of the file to be uploaded
+	 * @param {string} folderName - name of the folder to be uploaded
 	 * */
-	async upload(filePath) {
+	async upload(filePath,folderName) {
 		try {
 			const fileName = path.basename(filePath);
 			const fileContent = fs.readFileSync(filePath);
 			const stats = fs.statSync(filePath);
 
-			const uploadUrl = `${this.onelakeUrl}/${fileName}`;
+			const uploadUrl = `${this.onelakeUrl}/${folderName}/${fileName}`;
 
 			const accessToken = await this.getToken();
 
