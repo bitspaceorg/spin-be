@@ -2,22 +2,23 @@ services:
   backend:
     container_name: spin
     build: .
+    env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_HOST: postgres
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      SALT_ROUNDS: ${SALT_ROUNDS}
-      JWT_KEY: ${JWT_KEY}
-      CERBROS_URL: ${CERBROS_URL}
-      AZURE_CLIENTID: ${AZURE_CLIENTID}
-      AZURE_CLIENTSECRET: ${AZURE_CLIENTSECRET}
-      AZURE_TENANTID: ${AZURE_TENANTID}
-      AZURE_USERNAME: ${AZURE_USERNAME}
-      AZURE_PASSWORD: ${AZURE_PASSWORD}
-      AZURE_ONELAKEURL: ${AZURE_ONELAKEURL}
-      PORT: ${PORT}
-      BACKEND_URL: ${BACKEND_URL}
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_HOST
+      - POSTGRES_DBNAME
+      - SALT_ROUNDS
+      - JWT_KEY
+      - CERBROS_URL
+      - AZURE_CLIENTID
+      - AZURE_CLIENTSECRET
+      - AZURE_TENANTID
+      - AZURE_USERNAME
+      - AZURE_PASSWORD
+      - AZURE_ONELAKEURL
+      - PORT
+      - BACKEND_URL
     depends_on:
       - db
       - cerbos
@@ -31,10 +32,11 @@ services:
       - db
     volumes:
       - ./migrations:/migrations
+    env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DBNAME
     command:
       [
         "-path",
@@ -48,11 +50,12 @@ services:
   db:
     container_name: postgres
     image: postgres
+    env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: /data/postgres
-      POSTGRES_DB: spin
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - PGDATA
+      - POSTGRES_DB
     volumes:
       - db:/data/postgres
     networks:
@@ -66,6 +69,27 @@ services:
       - ./policies:/policies
     networks:
       - db
+  py_be:
+    container_name: py_be
+    image: suryaaprakassh/ms_py_spin
+    ports:
+      - "5000:5000"
+    networks:
+      - db
+    environment:
+      - AZURE_ENDPOINT
+      - AZURE_OPENAI_API_KEY
+      - AZURE_OPENAI_API_VERSION
+      - AZURE_DEPLOYMENT
+      - VECTOR_STORE_ADDRESS
+      - VECTOR_STORE_PASSWORD
+      - LLAMA_ENDPOINT
+      - LLAMA_API_KEY
+      - LLAMA_DEPLOYMENT
+      - LANGCHAIN_API_KEY
+      - LANGCHAIN_TRACING_V2
+      - LANGCHAIN_ENDPOINT
+      - LANGCHAIN_PROJECT
 networks:
   db:
     driver: bridge
