@@ -19,7 +19,7 @@ export async function handleVerify(req, res) {
 }
 
 export async function handleLogout(req, res) {
-	res.cookie("token", {});
+	res.clearCookie("token");
 	return res.status(200).json({
 		message: "Logout Successful!",
 	});
