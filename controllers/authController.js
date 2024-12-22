@@ -27,7 +27,7 @@ export async function handleLogin(req, res) {
 			maxAge: 1000 * 3600, //1 hours
 			secure: false,
 			httpOnly: false,
-            sameSite: "lax",
+			sameSite: "lax",
 		});
 		res.json({
 			message: "Login Successful!",
@@ -38,8 +38,9 @@ export async function handleLogin(req, res) {
 		});
 	} catch (err) {
 		console.error("ERROR: ", err.message);
-		res.json({
+		res.status(400).json({
 			message: "Login Failed!",
+			data: err.message,
 		});
 	}
 }
@@ -62,12 +63,13 @@ export async function handleSignup(req, res) {
 	} catch (err) {
 		console.error("ERROR: ", err.message, err.code);
 		if (err.code == "23505") {
-			res.json({
+			res.status(400).json({
 				message: "User Already Exists!",
 			});
 		} else {
-			res.json({
+			res.status(400).json({
 				message: "Failed to Create User!",
+				data: err.message,
 			});
 		}
 	}
