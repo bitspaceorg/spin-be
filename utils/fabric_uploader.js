@@ -4,6 +4,7 @@ import axios from "axios";
 import path from "path";
 import fs from "fs";
 import Env from "../config.js";
+import logger from "./logger.js";
 
 export default class FabricUploader {
 	static instance = null;
@@ -124,6 +125,8 @@ export default class FabricUploader {
 				},
 			});
 
+			logger.info("Uploaded File to onelake");
+
 			if (vectorUpload) {
 				//vectroDB upload
 				const jsonData = JSON.parse(fileContent);
@@ -138,9 +141,10 @@ export default class FabricUploader {
 						doctype: folderName != "health" ? "finance" : "health",
 					},
 				});
+				logger.info("Uploaded File to vectordb");
 			}
 		} catch (err) {
-			console.log(err);
+			logger.error(err.message);
 		}
 	}
 }

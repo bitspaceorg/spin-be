@@ -21,7 +21,6 @@ export const handleUpload = async (req, res) => {
 
 		await uploader.upload(req.file.path,req.body.type,true);
 
-
 		fs.unlinkSync(req.file.path);
 
 		res.json({
