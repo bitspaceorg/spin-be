@@ -9,13 +9,13 @@ export async function handleLogin(req, res) {
 		const data = await loginSchema.parseAsync(user);
 		const dbUser = await db.getUser(data.email);
 		if (!dbUser[0]) {
-			res.json({
+			res.status(400).json({
 				message: "Invalid User Credentials!",
 			});
 			return;
 		}
 		if (!checkHash(data.password, dbUser[0].password)) {
-			res.send("Failed to login user!");
+			res.status(400).send("Failed to login user!");
 			return;
 		}
 		const token = signToken({
@@ -56,7 +56,7 @@ export async function handleSignup(req, res) {
 			data.role,
 			data.password,
 		);
-		res.json({
+		res.status(201).json({
 			message: "user created successfully!",
 			user_id: id,
 		});
